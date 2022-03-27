@@ -1,0 +1,70 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""review """
+type Review {
+  name: String!
+  rating: Float!
+  comment: String!
+}
+
+"""review """
+type Producer {
+  name: String!
+}
+
+"""record """
+type Record {
+  id: ID!
+  artistName: String!
+  albumName: String!
+  releaseDate: DateTime!
+  producers: [Producer!]!
+  albumCover: String!
+  genres: [String!]!
+  description: String!
+  price: Float!
+  qtyInStock: Int!
+  rating: Float!
+  reviews: [Review!]!
+  reviewsQty: Float!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  records: [Record!]!
+}
+
+type Mutation {
+  createRecord(input: NewRecordInput!): [Record!]!
+}
+
+input NewRecordInput {
+  artistName: String!
+  albumName: String!
+  releaseDate: DateTime!
+  producers: [ProducerInput!]!
+  albumCover: String!
+  genres: [String!]!
+  description: String!
+  price: Float!
+  qtyInStock: Int!
+  rating: Float!
+  reviews: [ReviewInput!]!
+  reviewsQty: Float!
+}
+
+input ProducerInput {
+  name: String!
+}
+
+input ReviewInput {
+  name: String!
+  rating: Float!
+  comment: String!
+}
