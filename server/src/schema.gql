@@ -38,10 +38,11 @@ scalar DateTime
 
 type Query {
   records: [Record!]!
+  getRecord(id: String!): Record!
 }
 
 type Mutation {
-  createRecord(input: NewRecordInput!): [Record!]!
+  createRecord(input: NewRecordInput!): Record!
 }
 
 input NewRecordInput {

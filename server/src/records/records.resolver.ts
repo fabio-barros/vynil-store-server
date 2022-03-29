@@ -16,7 +16,15 @@ export class RecordsResolver {
   async records(): Promise<Record[]> {
     return this.recordsService.findAll();
   }
-  @Mutation((returns) => [Record])
+
+  @Query((returns) => Record)
+  async getRecord(
+    @Args('id', { type: () => String }) id: string,
+  ): Promise<Record> {
+    return this.recordsService.findOneById(id);
+  }
+
+  @Mutation((returns) => Record)
   async createRecord(@Args('input') input: NewRecordInput) {
     return this.recordsService.create(input);
   }

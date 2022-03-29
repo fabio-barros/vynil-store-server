@@ -14,13 +14,14 @@ export class RecordsService {
     const createdRecord = new this.recordModel(createRecordDto);
     return await createdRecord.save();
   }
-  // async findOneById(id: string): Promise<Record> {
-  //   return {} as any;
-  // }
+  async findOneById(id: string): Promise<Record> {
+    return this.recordModel.findById(id);
+  }
   async findAll(): Promise<Record[]> {
-    return [] as Record[];
+    return await this.recordModel.find();
   }
   async remove(id: string): Promise<boolean> {
+    await this.recordModel.findByIdAndDelete;
     return true;
   }
 }
