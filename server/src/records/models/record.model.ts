@@ -1,4 +1,5 @@
 import { Directive, Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
+import * as dayjs from 'dayjs';
 
 @ObjectType({ description: 'review ' })
 export class Review {
@@ -29,7 +30,7 @@ export class Record {
   @Field()
   albumName: string;
 
-  @Field()
+  @Field(() => Date)
   releaseDate: Date;
 
   @Field(() => [Producer])

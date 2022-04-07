@@ -4,7 +4,7 @@ import { PubSub } from 'graphql-subscriptions';
 import { NewRecordInput } from './dto/new-record-input.dto';
 import { RecordsArgs } from './dto/records.args';
 // import { Record } from './interfaces/record.interface';
-import { Record } from './models/record-view.model';
+import { Record } from './models/record.model';
 import { RecordsService } from './records.service';
 
 const pubSub = new PubSub();
@@ -26,6 +26,9 @@ export class RecordsResolver {
 
   @Mutation((returns) => Record)
   async createRecord(@Args('input') input: NewRecordInput) {
-    return this.recordsService.create(input);
+    console.log(input.releaseDate);
+    const createdRecord = this.recordsService.create(input);
+    pubSub.publish('recordCreated', { createdRecord: createdRecord });
+    return createdRecord;
   }
 }

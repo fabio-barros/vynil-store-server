@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import * as dayjs from 'dayjs';
 import mongoose from 'mongoose';
 import { Document } from 'mongoose';
 
@@ -33,8 +34,8 @@ export class Record {
   })
   albumName: string;
 
-  @Prop()
-  releaseDate: number;
+  @Prop({ type: Date })
+  releaseDate: Date;
 
   @Prop([Producer])
   producers: Producer[];

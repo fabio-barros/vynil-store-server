@@ -11,6 +11,8 @@ export class RecordsService {
     @InjectModel('Record') private readonly recordModel: Model<Record>,
   ) {}
   async create(createRecordDto: NewRecordInput): Promise<Record> {
+    console.log(createRecordDto.releaseDate);
+
     const createdRecord = new this.recordModel(createRecordDto);
     return await createdRecord.save();
   }
