@@ -16,9 +16,11 @@ export class RecordsService {
     const createdRecord = new this.recordModel(createRecordDto);
     return await createdRecord.save();
   }
+
   async findOneById(id: string): Promise<Record> {
     return this.recordModel.findById(id);
   }
+
   async findAll(): Promise<Record[]> {
     return await this.recordModel.find();
   }

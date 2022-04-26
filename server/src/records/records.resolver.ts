@@ -12,12 +12,19 @@ const pubSub = new PubSub();
 @Resolver((of) => Record)
 export class RecordsResolver {
   constructor(private readonly recordsService: RecordsService) {}
-  @Query((returns) => [Record])
+
+  @Query((returns) => [Record], {
+    name: 'GetRecords',
+    description: 'Returns all record entries in de database.',
+  })
   async records(): Promise<Record[]> {
     return this.recordsService.findAll();
   }
 
-  @Query((returns) => Record)
+  @Query((returns) => Record, {
+    name: 'GetRecord',
+    description: 'Returns one record entity by Id.',
+  })
   async getRecord(
     @Args('id', { type: () => String }) id: string,
   ): Promise<Record> {

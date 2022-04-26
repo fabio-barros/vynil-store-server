@@ -30,8 +30,8 @@ export class Record {
   @Field()
   albumName: string;
 
-  @Field(() => Date)
-  releaseDate: Date;
+  @Field(() => Int)
+  releaseDate: number;
 
   @Field(() => [Producer])
   producers: Producer[];

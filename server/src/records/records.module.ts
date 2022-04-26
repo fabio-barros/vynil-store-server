@@ -8,6 +8,6 @@ import { DateScalar } from '../common/data.scalar';
   imports: [
     MongooseModule.forFeature([{ name: 'Record', schema: RecordSchema }]),
   ],
-  providers: [RecordsResolver, RecordsService, DateScalar],
+  providers: [RecordsResolver, RecordsService],
 })
 export class RecordsModule {}

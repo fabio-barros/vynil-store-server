@@ -18,7 +18,7 @@ export interface Record extends Document {
 
   readonly albumName: string;
 
-  readonly releaseDate: Date;
+  readonly releaseDate: number;
 
   readonly producers: Producer[];
 

@@ -1,40 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { User } from 'src/users/models/users.model';
+import { UserView } from 'src/users/entities/user-view.entity';
+import { User } from 'src/users/users.schema';
 import { UsersService } from 'src/users/users.service';
+import { LoginResponse } from './dto/login-response';
+import { LoginUserInput } from './dto/login-user.input';
+import * as bcrypt from 'bcrypt';
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly userService: UsersService,
-    private readonly jwtService: JwtService,
+    private usersService: UsersService,
+    private jwtService: JwtService,
   ) {}
 
-  async validate(email: string, password: string): Promise<User> {
-    const user = this.userService.getUserByEmail(email);
-    if (!user) {
-      return null;
+  async validateUser(username: string, password: string): Promise<any> {
+    const user = await this.usersService.findOne(username);
+    const valid = await bcrypt.compare(password, user.password);
+    if (user && valid) {
+      const { password, ...result } = user;
+      return result;
     }
-    const passwordIsValid = password === user.password;
-    return passwordIsValid ? user : null;
+
+    return null;
   }
 
-  async login(user: User): Promise<{ access_token: string }> {
-    const payload = { email: user.email, sub: user.userId };
+  async login(user: UserView): Promise<LoginResponse> {
+    // const user = await this.usersService.findOne(loginUserInput.username);
+    // const { password, ...result } = user;
 
-    return { access_token: this.jwtService.sign(payload) };
+    return {
+      access_token: this.jwtService.sign({
+        username: user.username,
+        sub: user.id,
+      }),
+      user: user,
+    };
   }
 
-  async verify(token: string): Promise<User> {
-    const decoded = this.jwtService.verify(token, {
-      secret: process.env.jwtSecret,
-    });
-
-    const user = this.userService.getUserByEmail(decoded.email);
-    if (!user) {
-      throw new Error('Unable to get user grom decoded token.');
+  async register(registerInput: LoginUserInput): Promise<UserView> {
+    const user = await this.usersService.findOne(registerInput.username);
+    if (user) {
+      throw new ConflictException('User already exists');
     }
-    return user;
+    const password = await bcrypt.hash(registerInput.password, 10);
+
+    return this.usersService.create({ ...registerInput, password });
   }
 }

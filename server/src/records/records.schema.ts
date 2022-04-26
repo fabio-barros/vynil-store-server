@@ -34,8 +34,13 @@ export class Record {
   })
   albumName: string;
 
-  @Prop({ type: Date })
-  releaseDate: Date;
+  @Prop({
+    type: Number,
+    maxlength: 4,
+    minlength: 4,
+    max: new Date().getFullYear(),
+  })
+  releaseDate: number;
 
   @Prop([Producer])
   producers: Producer[];

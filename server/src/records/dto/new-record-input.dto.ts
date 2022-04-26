@@ -28,8 +28,8 @@ export class NewRecordInput {
   @Field()
   readonly albumName: string;
 
-  @Field(() => String)
-  readonly releaseDate: string;
+  @Field(() => Int)
+  readonly releaseDate: number;
 
   @Field(() => [ProducerInput])
   readonly producers: ProducerInput[];

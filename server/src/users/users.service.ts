@@ -1,65 +1,42 @@
-import { Injectable } from '@nestjs/common';
-import { v4 as uuidv4 } from 'uuid';
-import { GetUserArgs } from './dto/args/get-user.args';
-import { GetUsersArgs } from './dto/args/get-users.args';
-import { CreateUserInput } from './dto/input/create-user.input';
-import { DeleteUserInput } from './dto/input/delete-user.input';
-import { UpdateUserInput } from './dto/input/update-user.input';
-import { User } from './models/users.model';
-
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { User } from './entities/user.entity';
+import { Model } from 'mongoose';
+import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
+import { CreateUserInput } from './dto/create-user.input';
 @Injectable()
 export class UsersService {
-  private users: User[] = [
+  constructor(
+    @InjectModel(User.name) private readonly userModel: Model<User>,
+  ) {}
+  private users = [
+    { id: '1', username: 'Du', password: '123' },
+    { id: '2', username: 'Dudu', password: '231' },
     {
-      email: 'test@email.com',
-      password: 'pass1234',
-      userId: '123',
-      age: 20,
+      id: '3',
+      username: 'Edu',
+      password: '312',
     },
   ];
 
-  public createUser(createUserData: CreateUserInput): User {
-    const user: User = {
-      userId: uuidv4(),
-      ...createUserData,
-    };
+  async findAll(): Promise<User[]> {
+    // return await this.userModel.find();
+    return this.users;
+  }
+  async findOne(userName: string): Promise<User> {
+    // return await this.userModel.findOne({ username: userName }).exec();
+    const user = this.users.find((u) => u.username === userName);
+    // if (!user) {
+    //   // throw Error('User not found.');
+    //   throw new NotFoundException();
+    // }
+    return await user;
+  }
 
+  async create(registerInput: CreateUserInput) {
+    const user = { ...registerInput, id: (this.users.length + 1).toString() };
     this.users.push(user);
-
-    return user;
-  }
-
-  public updateUser(updateUserData: UpdateUserInput): User {
-    const user = this.users.find(
-      (user) => user.userId === updateUserData.userId,
-    );
-
-    Object.assign(user, updateUserData);
-
-    return user;
-  }
-
-  public getUser(getUserArgs: GetUserArgs): User {
-    return this.users.find((user) => user.userId === getUserArgs.userId);
-  }
-
-  public getUserByEmail(email: string): User | undefined {
-    return this.users.find((user) => user.email === email);
-  }
-
-  public getUsers(getUsersArgs: GetUsersArgs): User[] {
-    return getUsersArgs.userIds.map((userId) => this.getUser({ userId }));
-  }
-
-  public deleteUser(deleteUserData: DeleteUserInput): User {
-    const userIndex = this.users.findIndex(
-      (user) => user.userId === deleteUserData.userId,
-    );
-
-    const user = this.users[userIndex];
-
-    this.users.splice(userIndex);
-
+    console.log(this.users);
     return user;
   }
 }

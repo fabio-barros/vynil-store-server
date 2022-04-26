@@ -1,7 +1,10 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
+import { subscribe } from 'graphql';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { User } from 'src/users/models/users.model';
+import { UserView } from 'src/users/entities/user-view.entity';
+import { User } from 'src/users/users.schema';
+
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()
@@ -11,14 +14,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
       secretOrKey: process.env.jwtSecret,
-      usernameField: 'email',
     });
   }
 
-  async validate(validationPayload: {
-    email: string;
-    sub: string;
-  }): Promise<User | null> {
-    return this.userService.getUserByEmail(validationPayload.email);
+  async validate(payload: any): Promise<UserView> {
+    return { id: payload.sub, username: payload.username };
   }
 }

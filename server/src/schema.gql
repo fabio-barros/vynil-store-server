@@ -2,11 +2,37 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-"""review """
-type Review {
-  name: String!
+type LoginResponse {
+  access_token: String!
+  user: UserView!
+}
+
+"""Login Input"""
+input LoginUserInput {
+  """Password"""
+  password: String!
+  username: String!
+}
+
+type Mutation {
+  createRecord(input: NewRecordInput!): Record!
+  login(loginUserInput: LoginUserInput!): LoginResponse!
+  register(loginUserInput: LoginUserInput!): UserView!
+}
+
+input NewRecordInput {
+  albumCover: String!
+  albumName: String!
+  artistName: String!
+  description: String!
+  genres: [String!]!
+  price: Float!
+  producers: [ProducerInput!]!
+  qtyInStock: Int!
   rating: Float!
-  comment: String!
+  releaseDate: Int!
+  reviews: [ReviewInput!]!
+  reviewsQty: Float!
 }
 
 """review """
@@ -14,84 +40,67 @@ type Producer {
   name: String!
 }
 
-"""record """
-type Record {
-  id: ID!
-  artistName: String!
-  albumName: String!
-  releaseDate: Date!
-  producers: [Producer!]!
-  albumCover: String!
-  genres: [String!]!
-  description: String!
-  price: Float!
-  qtyInStock: Int!
-  rating: Float!
-  reviews: [Review!]!
-  reviewsQty: Float!
-}
-
-"""Date custom scalar type"""
-scalar Date
-
-"""user"""
-type User {
-  userId: ID!
-  email: String!
-  age: Int!
-  isSubscribed: Boolean
-  password: String
-}
-
-type Query {
-  records: [Record!]!
-  getRecord(id: String!): Record!
-  users(userIds: [String!]!): [User]!
-}
-
-type Mutation {
-  createRecord(input: NewRecordInput!): Record!
-  createUser(createUserData: CreateUserInput!): User!
-  updateUser(updateUserData: UpdateUserInput!): User!
-  deleteUser(deleteUserData: DeleteUserInput!): User!
-}
-
-input NewRecordInput {
-  artistName: String!
-  albumName: String!
-  releaseDate: String!
-  producers: [ProducerInput!]!
-  albumCover: String!
-  genres: [String!]!
-  description: String!
-  price: Float!
-  qtyInStock: Int!
-  rating: Float!
-  reviews: [ReviewInput!]!
-  reviewsQty: Float!
-}
-
 input ProducerInput {
   name: String!
 }
 
-input ReviewInput {
+type Query {
+  """Returns one record entity by Id."""
+  GetRecord(id: String!): Record!
+
+  """Returns all record entries in de database."""
+  GetRecords: [Record!]!
+  findAll: [User!]!
+  findOne(username: String!): User!
+}
+
+"""record """
+type Record {
+  albumCover: String!
+  albumName: String!
+  artistName: String!
+  description: String!
+  genres: [String!]!
+  id: ID!
+  price: Float!
+  producers: [Producer!]!
+  qtyInStock: Int!
+  rating: Float!
+  releaseDate: Int!
+  reviews: [Review!]!
+  reviewsQty: Float!
+}
+
+"""review """
+type Review {
+  comment: String!
   name: String!
   rating: Float!
+}
+
+input ReviewInput {
   comment: String!
+  name: String!
+  rating: Float!
 }
 
-input CreateUserInput {
-  email: String!
-  age: Float!
+"""user"""
+type User {
+  """UserID"""
+  id: ID!
+
+  """Password"""
+  password: String!
+
+  """UserName"""
+  username: String!
 }
 
-input UpdateUserInput {
-  userId: String!
-  age: Float!
-  isSubscribed: Boolean
-}
+"""user"""
+type UserView {
+  """UserID"""
+  id: ID!
 
-input DeleteUserInput {
-  userId: String!
+  """UserName"""
+  username: String!
 }
