@@ -15,6 +15,7 @@ input LoginUserInput {
 }
 
 type Mutation {
+  """Creates a record input on the database and returns it."""
   createRecord(input: NewRecordInput!): Record!
   login(loginUserInput: LoginUserInput!): LoginResponse!
   register(loginUserInput: LoginUserInput!): UserView!
@@ -45,13 +46,14 @@ input ProducerInput {
 }
 
 type Query {
-  """Returns one record entity by Id."""
-  GetRecord(id: String!): Record!
-
-  """Returns all record entries in de database."""
-  GetRecords: [Record!]!
   findAll: [User!]!
   findOne(username: String!): User!
+
+  """Returns one record entity by Id."""
+  record(id: String!): Record!
+
+  """Returns all record entries in de database."""
+  records: [Record!]!
 }
 
 """record """

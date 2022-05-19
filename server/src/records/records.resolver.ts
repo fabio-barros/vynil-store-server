@@ -14,7 +14,7 @@ export class RecordsResolver {
   constructor(private readonly recordsService: RecordsService) {}
 
   @Query((returns) => [Record], {
-    name: 'GetRecords',
+    name: 'records',
     description: 'Returns all record entries in de database.',
   })
   async records(): Promise<Record[]> {
@@ -22,16 +22,19 @@ export class RecordsResolver {
   }
 
   @Query((returns) => Record, {
-    name: 'GetRecord',
+    name: 'record',
     description: 'Returns one record entity by Id.',
   })
-  async getRecord(
+  async record(
     @Args('id', { type: () => String }) id: string,
   ): Promise<Record> {
     return this.recordsService.findOneById(id);
   }
 
-  @Mutation((returns) => Record)
+  @Mutation((returns) => Record, {
+    name: 'createRecord',
+    description: 'Creates a record input on the database and returns it.',
+  })
   async createRecord(@Args('input') input: NewRecordInput) {
     console.log(input.releaseDate);
     const createdRecord = this.recordsService.create(input);

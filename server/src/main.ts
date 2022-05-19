@@ -7,7 +7,7 @@ async function bootstrap() {
   app.use('/voyager', voyagerMiddleware({ endpointUrl: '/graphql' }));
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors();
-  const PORT = process.env.PORT || 5000;
+  const PORT = process.env.PORT || 5001;
   await app.listen(PORT);
   console.log(`Application is running on: ${await app.getUrl()}`);
 }

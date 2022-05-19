@@ -20,7 +20,6 @@ export class AuthResolver {
   }
 
   @Mutation(() => UserView)
-  // @UseGuards(GqlAuthGuard)
   async register(
     @Args('loginUserInput') loginUserInput: LoginUserInput,
     @Context() context,
