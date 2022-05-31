@@ -8,6 +8,9 @@ export class User {
   @Field({ description: 'UserName' })
   username: string;
 
+  // @Field({ description: 'Email' })
+  // email: string;
+
   @Field({ description: 'Password' })
   password: string;
 }

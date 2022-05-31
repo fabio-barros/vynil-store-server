@@ -23,20 +23,24 @@ export class UsersService {
     // return await this.userModel.find();
     return this.users;
   }
-  async findOne(userName: string): Promise<User> {
-    // return await this.userModel.findOne({ username: userName }).exec();
-    const user = this.users.find((u) => u.username === userName);
+  async findOne(username: string): Promise<User> {
+    const user = await this.userModel.findOne({ username }).exec();
+    return user;
+    // const user = this.users.find((u) => u.username === username);
     // if (!user) {
-    //   // throw Error('User not found.');
-    //   throw new NotFoundException();
+    //   // // throw Error('User not found.');
+    //   // throw new NotFoundException();
+    //   return null;
     // }
-    return await user;
+    // return await user;
   }
 
   async create(registerInput: CreateUserInput) {
-    const user = { ...registerInput, id: (this.users.length + 1).toString() };
-    this.users.push(user);
-    console.log(this.users);
-    return user;
+    // const user = { ...registerInput, id: (this.users.length + 1).toString() };
+    // this.users.push(user);
+    // console.log(this.users);
+    const createdRecord = new this.userModel(registerInput);
+    return await createdRecord.save();
+    // return user;
   }
 }

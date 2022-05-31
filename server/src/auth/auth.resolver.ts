@@ -1,5 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
+import { CreateUserInput } from 'src/users/dto/create-user.input';
 import { UserView } from 'src/users/entities/user-view.entity';
 import { AuthService } from './auth.service';
 import { LoginResponse } from './dto/login-response';
@@ -16,14 +17,15 @@ export class AuthResolver {
     @Args('loginUserInput') loginUserInput: LoginUserInput,
     @Context() context,
   ) {
+    console.log('ctx user-> ', context.user);
     return await this.authService.login(context.user);
   }
 
   @Mutation(() => UserView)
   async register(
-    @Args('loginUserInput') loginUserInput: LoginUserInput,
+    @Args('createUserInput') createUserInput: CreateUserInput,
     @Context() context,
   ) {
-    return await this.authService.register(loginUserInput);
+    return await this.authService.register(createUserInput);
   }
 }

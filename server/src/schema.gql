@@ -2,6 +2,14 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreateUserInput {
+  """User Password"""
+  password: String!
+
+  """Username"""
+  username: String!
+}
+
 type LoginResponse {
   access_token: String!
   user: UserView!
@@ -18,7 +26,7 @@ type Mutation {
   """Creates a record input on the database and returns it."""
   createRecord(input: NewRecordInput!): Record!
   login(loginUserInput: LoginUserInput!): LoginResponse!
-  register(loginUserInput: LoginUserInput!): UserView!
+  register(createUserInput: CreateUserInput!): UserView!
 }
 
 input NewRecordInput {
