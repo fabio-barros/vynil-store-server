@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   NotFoundException,
+  Post,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserView } from 'src/users/entities/user-view.entity';
@@ -11,6 +12,7 @@ import { LoginResponse } from './dto/login-response';
 import { LoginUserInput } from './dto/login-user.input';
 import * as bcrypt from 'bcrypt';
 import { CreateUserInput } from 'src/users/dto/create-user.input';
+import { RegisterUserInput } from './dto/register-user.input';
 @Injectable()
 export class AuthService {
   constructor(
@@ -18,10 +20,10 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(username: string, password: string): Promise<UserView> {
+  async validateUser(email: string, password: string): Promise<UserView> {
     console.log('validate user');
-    console.log(username, password);
-    const user = await this.usersService.findOne(username);
+    console.log(email, password);
+    const user = await this.usersService.findOne(email);
     if (!user) {
       // // throw Error('User not found.');
       throw new NotFoundException('User not found.');
@@ -32,15 +34,20 @@ export class AuthService {
     if (user && valid) {
       console.log('if');
       // const { password, ...result } = user;
-      return { id: user.id, username: user.username };
+      return { id: user.id, username: user.username, email: user.email };
     }
 
     return null;
   }
 
-  async login(loginCredentials: UserView): Promise<LoginResponse> {
-    const user = await this.usersService.findOne(loginCredentials.username);
+  async login(user: UserView): Promise<LoginResponse> {
+    // console.log('login-> ', loginCredentials);
+    // const user = await this.usersService.findOne(loginCredentials.email);
+    console.log('login-> ', user);
     // const { password, ...result } = user;
+    if (!user) {
+      throw new NotFoundException('User not found.');
+    }
 
     return {
       access_token: this.jwtService.sign({
@@ -70,12 +77,12 @@ export class AuthService {
   //   };
   // }
 
-  async register(registerInput: LoginUserInput): Promise<UserView> {
+  async register(registerInput: CreateUserInput): Promise<User> {
     const user = await this.usersService.findOne(registerInput.username);
     console.log(user);
     if (user) {
       console.log('exception');
-      throw new ConflictException('User already exists');
+      throw new ConflictException('User already exists.');
     }
     console.log(user);
     const password = await bcrypt.hash(registerInput.password, 10);

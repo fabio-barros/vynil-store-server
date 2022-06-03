@@ -64,7 +64,7 @@ export class Record {
   rating: number;
 
   @Prop([Review])
-  review: Review[];
+  reviews: Review[];
 
   @Prop()
   reviewsQty: number;

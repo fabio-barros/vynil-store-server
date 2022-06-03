@@ -6,6 +6,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use('/voyager', voyagerMiddleware({ endpointUrl: '/graphql' }));
   app.useGlobalPipes(new ValidationPipe());
+  // const corsOptions = {
+  //   origin: 'http://localhost:3000/',
+  //   credentials: true,
+  // };
   app.enableCors();
   const PORT = process.env.PORT || 5001;
   await app.listen(PORT);

@@ -5,6 +5,9 @@ export class UserView {
   @Field(() => ID, { description: 'UserID' })
   id: string;
 
-  @Field({ description: 'UserName' })
+  @Field({ description: 'Email' })
+  email: string;
+
+  @Field({ description: 'Username' })
   username: string;
 }

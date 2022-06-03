@@ -6,6 +6,9 @@ export class CreateUserInput {
   @Field({ description: 'Username' })
   username: string;
 
+  @Field({ description: 'Email' })
+  email: string;
+
   @Field({ description: 'User Password' })
   password: string;
 }

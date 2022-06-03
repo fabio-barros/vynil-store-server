@@ -3,6 +3,9 @@
 # ------------------------------------------------------
 
 input CreateUserInput {
+  """Email"""
+  email: String!
+
   """User Password"""
   password: String!
 
@@ -17,8 +20,10 @@ type LoginResponse {
 
 """Login Input"""
 input LoginUserInput {
-  """Password"""
+  """Password used when user registered."""
   password: String!
+
+  """Email used when user registered."""
   username: String!
 }
 
@@ -54,7 +59,6 @@ input ProducerInput {
 }
 
 type Query {
-  findAll: [User!]!
   findOne(username: String!): User!
 
   """Returns one record entity by Id."""
@@ -96,6 +100,9 @@ input ReviewInput {
 
 """user"""
 type User {
+  """Email"""
+  email: String!
+
   """UserID"""
   id: ID!
 
@@ -108,9 +115,12 @@ type User {
 
 """user"""
 type UserView {
+  """Email"""
+  email: String!
+
   """UserID"""
   id: ID!
 
-  """UserName"""
+  """Username"""
   username: String!
 }
