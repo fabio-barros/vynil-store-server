@@ -1,17 +1,42 @@
-import { CreateUserInput } from './create-order.input';
+import { CreateOrderInput } from './create-order.input';
 import { InputType, Field, Int, PartialType, ID } from '@nestjs/graphql';
+import { Record } from 'src/records/models/record.model';
 
 @InputType()
-export class UpdateUserInput extends PartialType(CreateUserInput) {
+export class UpdateOrderInput extends PartialType(CreateOrderInput) {
   @Field(() => ID)
   id: string;
 
-  @Field({ description: 'Username' })
-  username: string;
+  @Field({ description: 'Id of the user associated with the order' })
+  buyerID: string;
 
-  @Field({ description: 'Email' })
-  email: string;
+  @Field(() => [Record])
+  records: Record[];
 
-  @Field({ description: 'User Password' })
-  password: string;
+  @Field()
+  status: string;
+
+  @Field()
+  address: string;
+
+  @Field()
+  houseNumber: string;
+
+  @Field()
+  city: string;
+
+  @Field()
+  postalCode: string;
+
+  @Field()
+  state: string;
+
+  @Field()
+  itemsPrice: string;
+
+  @Field()
+  shippingPrice: string;
+
+  @Field()
+  totalPrice: string;
 }

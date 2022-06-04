@@ -49,6 +49,26 @@ input NewRecordInput {
   reviewsQty: Float!
 }
 
+"""user"""
+type OrderType {
+  address: String!
+
+  """Id of the user associated with the order"""
+  buyerID: ID!
+  city: String!
+  houseNumber: String!
+
+  """Order Id"""
+  id: ID!
+  itemsPrice: String!
+  postalCode: String!
+  products: [Record!]!
+  shippingPrice: String!
+  state: String!
+  status: String!
+  totalPrice: String!
+}
+
 """review """
 type Producer {
   name: String!
@@ -105,6 +125,7 @@ type User {
 
   """UserID"""
   id: ID!
+  orders: [OrderType!]!
 
   """Password"""
   password: String!

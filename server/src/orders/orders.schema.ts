@@ -18,6 +18,54 @@ export class Order {
     required: true,
   })
   status: string;
+
+  @Prop({
+    type: String,
+    required: true,
+  })
+  address: string;
+
+  @Prop({
+    type: String,
+    required: true,
+  })
+  houseNumber: string;
+
+  @Prop({
+    type: String,
+    required: true,
+  })
+  city: string;
+
+  @Prop({
+    type: String,
+    required: true,
+  })
+  postalCode: string;
+
+  @Prop({
+    type: String,
+    required: true,
+  })
+  state: string;
+
+  @Prop({
+    type: String,
+    required: true,
+  })
+  itemsPrice: string;
+
+  @Prop({
+    type: String,
+    required: true,
+  })
+  shippingPrice: string;
+
+  @Prop({
+    type: String,
+    required: true,
+  })
+  totalPrice: string;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

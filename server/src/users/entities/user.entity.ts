@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
+import { OrderType } from 'src/orders/entities/order.entity';
 
 @ObjectType({ description: 'user' })
 export class User {
@@ -13,4 +14,7 @@ export class User {
 
   @Field({ description: 'Password' })
   password: string;
+
+  @Field(() => [OrderType])
+  orders: OrderType[];
 }
