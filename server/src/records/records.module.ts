@@ -4,9 +4,12 @@ import { RecordsResolver } from './records.resolver';
 import { RecordSchema } from './records.schema';
 import { RecordsService } from './records.service';
 import { DateScalar } from '../common/data.scalar';
+import { RecordType } from './models/record.model';
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: 'Record', schema: RecordSchema }]),
+    MongooseModule.forFeature([
+      { name: RecordType.name, schema: RecordSchema },
+    ]),
   ],
   providers: [RecordsResolver, RecordsService],
 })

@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
+import { OrderType } from 'src/orders/entities/order.entity';
 
 @ObjectType({ description: 'user' })
 export class UserView {
@@ -10,4 +11,7 @@ export class UserView {
 
   @Field({ description: 'Username' })
   username: string;
+
+  @Field(() => [OrderType])
+  orders: OrderType[];
 }

@@ -9,6 +9,8 @@ export interface Order extends Document {
 
   readonly products: Record[];
 
+  readonly status: string;
+
   readonly address: string;
 
   readonly houseNumber: string;

@@ -2,6 +2,25 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreateOrderInput {
+  address: String!
+
+  """Id of the user associated with the order"""
+  buyerID: String!
+  city: String!
+  houseNumber: String!
+
+  """Order Id"""
+  id: ID!
+  itemsPrice: String!
+  postalCode: String!
+  products: [RecordInput!]!
+  shippingPrice: String!
+  state: String!
+  status: String!
+  totalPrice: String!
+}
+
 input CreateUserInput {
   """Email"""
   email: String!
@@ -28,25 +47,16 @@ input LoginUserInput {
 }
 
 type Mutation {
+  createOrder(input: CreateOrderInput!): OrderType!
+
   """Creates a record input on the database and returns it."""
-  createRecord(input: NewRecordInput!): Record!
+  createRecord(input: RecordInput!): RecordType!
+  deleteOrder(id: String!): OrderType!
+  deleteRecord(id: String!): RecordType!
   login(loginUserInput: LoginUserInput!): LoginResponse!
   register(createUserInput: CreateUserInput!): UserView!
-}
-
-input NewRecordInput {
-  albumCover: String!
-  albumName: String!
-  artistName: String!
-  description: String!
-  genres: [String!]!
-  price: Float!
-  producers: [ProducerInput!]!
-  qtyInStock: Int!
-  rating: Float!
-  releaseDate: Int!
-  reviews: [ReviewInput!]!
-  reviewsQty: Float!
+  updateOrder(id: String!, input: CreateOrderInput!): OrderType!
+  updateRecord(id: String!, input: RecordInput!): RecordType!
 }
 
 """user"""
@@ -62,34 +72,53 @@ type OrderType {
   id: ID!
   itemsPrice: String!
   postalCode: String!
-  products: [Record!]!
+  products: [RecordType!]!
   shippingPrice: String!
   state: String!
   status: String!
   totalPrice: String!
 }
 
-"""review """
-type Producer {
-  name: String!
-}
-
 input ProducerInput {
   name: String!
 }
 
+"""review """
+type ProducerType {
+  name: String!
+}
+
 type Query {
-  findOne(username: String!): User!
+  """Returns one order entity by Id."""
+  order(id: String!): OrderType!
+  orders: [OrderType!]!
 
   """Returns one record entity by Id."""
-  record(id: String!): Record!
+  record(id: String!): RecordType!
 
   """Returns all record entries in de database."""
-  records: [Record!]!
+  records: [RecordType!]!
+  user(username: String!): User!
+  users: [User!]!
+}
+
+input RecordInput {
+  albumCover: String!
+  albumName: String!
+  artistName: String!
+  description: String!
+  genres: [String!]!
+  price: Float!
+  producers: [ProducerInput!]!
+  qtyInStock: Int!
+  rating: Float!
+  releaseDate: Int!
+  reviews: [ReviewInput!]!
+  reviewsQty: Float!
 }
 
 """record """
-type Record {
+type RecordType {
   albumCover: String!
   albumName: String!
   artistName: String!
@@ -97,22 +126,22 @@ type Record {
   genres: [String!]!
   id: ID!
   price: Float!
-  producers: [Producer!]!
+  producers: [ProducerType!]!
   qtyInStock: Int!
   rating: Float!
   releaseDate: Int!
-  reviews: [Review!]!
+  reviews: [ReviewType!]!
   reviewsQty: Float!
 }
 
-"""review """
-type Review {
+input ReviewInput {
   comment: String!
   name: String!
   rating: Float!
 }
 
-input ReviewInput {
+"""review """
+type ReviewType {
   comment: String!
   name: String!
   rating: Float!
@@ -141,6 +170,7 @@ type UserView {
 
   """UserID"""
   id: ID!
+  orders: [OrderType!]!
 
   """Username"""
   username: String!

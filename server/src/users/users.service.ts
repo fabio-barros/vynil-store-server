@@ -11,21 +11,13 @@ export class UsersService {
     @InjectModel(User.name) private readonly userModel: Model<User>,
   ) {}
 
-  // async findAll(): Promise<User[]> {
-  //   // return await this.userModel.find();
-  //   return this.users;
-  // }
+  async findAll(): Promise<User[]> {
+    return await this.userModel.find();
+  }
   async findOne(username: string): Promise<User> {
     const user = await this.userModel.findOne({ email: username }).exec();
     console.log('login-> ', user);
     return user;
-    // const user = this.users.find((u) => u.username === username);
-    // if (!user) {
-    //   // // throw Error('User not found.');
-    //   // throw new NotFoundException();
-    //   return null;
-    // }
-    // return await user;
   }
 
   async create(registerInput: CreateUserInput): Promise<User> {

@@ -1,6 +1,7 @@
 import { InputType, Int, Field, ID } from '@nestjs/graphql';
 import { isEmail } from 'class-validator';
-import { Record } from 'src/records/models/record.model';
+import { RecordInput } from 'src/records/dto/new-record-input.dto';
+import { RecordType } from 'src/records/models/record.model';
 
 @InputType()
 export class CreateOrderInput {
@@ -10,8 +11,8 @@ export class CreateOrderInput {
   @Field({ description: 'Id of the user associated with the order' })
   buyerID: string;
 
-  @Field(() => [Record])
-  records: Record[];
+  @Field(() => [RecordInput])
+  products: RecordInput[];
 
   @Field()
   status: string;

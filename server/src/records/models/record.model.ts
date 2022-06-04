@@ -2,7 +2,7 @@ import { Directive, Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
 import * as dayjs from 'dayjs';
 
 @ObjectType({ description: 'review ' })
-export class Review {
+export class ReviewType {
   @Field()
   name: string;
 
@@ -14,13 +14,13 @@ export class Review {
 }
 
 @ObjectType({ description: 'review ' })
-export class Producer {
+export class ProducerType {
   @Field()
   name: string;
 }
 
 @ObjectType({ description: 'record ' })
-export class Record {
+export class RecordType {
   @Field(() => ID)
   id: string;
 
@@ -33,8 +33,8 @@ export class Record {
   @Field(() => Int)
   releaseDate: number;
 
-  @Field(() => [Producer])
-  producers: Producer[];
+  @Field(() => [ProducerType])
+  producers: ProducerType[];
 
   @Field()
   albumCover: string;
@@ -55,8 +55,8 @@ export class Record {
   @Field(() => Float)
   rating: number;
 
-  @Field(() => [Review])
-  reviews: Review[];
+  @Field(() => [ReviewType])
+  reviews: ReviewType[];
 
   @Field()
   reviewsQty: number;

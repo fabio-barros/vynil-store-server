@@ -1,31 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { NewRecordInput } from './dto/new-record-input.dto';
+import { RecordInput } from './dto/new-record-input.dto';
 import { RecordsArgs } from './dto/records.args';
-import { Record } from './interfaces/record.interface';
+// import { Record } from './interfaces/record.interface';
 import { Model } from 'mongoose';
+import { RecordType } from './models/record.model';
+import { Record } from './interfaces/record.interface';
 
 @Injectable()
 export class RecordsService {
   constructor(
-    @InjectModel('Record') private readonly recordModel: Model<Record>,
+    @InjectModel('RecordType') private readonly recordModel: Model<RecordType>,
   ) {}
-  async create(createRecordDto: NewRecordInput): Promise<Record> {
+  async create(createRecordDto: RecordInput): Promise<RecordType> {
     console.log(createRecordDto.releaseDate);
 
     const createdRecord = new this.recordModel(createRecordDto);
     return await createdRecord.save();
   }
 
-  async findOneById(id: string): Promise<Record> {
+  async findOneById(id: string): Promise<RecordType> {
     return this.recordModel.findById(id);
   }
 
-  async findAll(): Promise<Record[]> {
+  async findAll(): Promise<RecordType[]> {
     return await this.recordModel.find();
   }
-  async remove(id: string): Promise<boolean> {
-    await this.recordModel.findByIdAndDelete;
-    return true;
+
+  async delete(id: string): Promise<RecordType> {
+    return await this.recordModel.findByIdAndRemove({ id });
+  }
+  async update(id: string, item: Record): Promise<RecordType> {
+    return await this.recordModel.findByIdAndUpdate(id, item, { new: true });
   }
 }

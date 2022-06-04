@@ -20,7 +20,7 @@ export class ProducerInput {
 }
 
 @InputType()
-export class NewRecordInput {
+export class RecordInput {
   @Field()
   @MaxLength(30)
   readonly artistName: string;

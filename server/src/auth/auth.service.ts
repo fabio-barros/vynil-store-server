@@ -34,7 +34,12 @@ export class AuthService {
     if (user && valid) {
       console.log('if');
       // const { password, ...result } = user;
-      return { id: user.id, username: user.username, email: user.email };
+      return {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        orders: user.orders,
+      };
     }
 
     return null;

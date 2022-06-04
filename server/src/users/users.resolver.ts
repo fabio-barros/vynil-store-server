@@ -8,14 +8,14 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
-  // @Query(() => [User], { name: 'findAll' })
-  // @UseGuards(JwtAuthGuard)
-  // async findAll() {
-  //   return await this.usersService.findAll();
-  // }
+  @Query(() => [User], { name: 'users' })
+  @UseGuards(JwtAuthGuard)
+  async users() {
+    return await this.usersService.findAll();
+  }
 
-  @Query(() => User, { name: 'findOne' })
-  async findOne(@Args('username', { type: () => String }) username: string) {
+  @Query(() => User, { name: 'user' })
+  async user(@Args('username', { type: () => String }) username: string) {
     return await this.usersService.findOne(username);
   }
 

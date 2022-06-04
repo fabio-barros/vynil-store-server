@@ -1,5 +1,5 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
-import { Record } from 'src/records/models/record.model';
+import { RecordType } from 'src/records/models/record.model';
 
 @ObjectType({ description: 'user' })
 export class OrderType {
@@ -9,8 +9,8 @@ export class OrderType {
   @Field(() => ID, { description: 'Id of the user associated with the order' })
   buyerID: string;
 
-  @Field(() => [Record])
-  products: Record[];
+  @Field(() => [RecordType])
+  products: RecordType[];
 
   @Field()
   status: string;

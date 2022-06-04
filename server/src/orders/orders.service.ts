@@ -21,7 +21,7 @@ export class OrdersService {
   }
 
   async findOne(id: string): Promise<OrderType> {
-    return await this.itemModel.findOne({ _id: id });
+    return await this.itemModel.findOne({ id });
   }
 
   async delete(id: string): Promise<OrderType> {
