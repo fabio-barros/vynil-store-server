@@ -4,15 +4,19 @@ import { RecordInput } from 'src/records/dto/new-record-input.dto';
 import { RecordType } from 'src/records/models/record.model';
 
 @InputType()
+export class OrderProductsInput {
+  @Field()
+  recordId: string;
+  @Field()
+  qty: number;
+}
+@InputType()
 export class CreateOrderInput {
-  @Field(() => ID, { description: 'Order Id' })
-  id: string;
-
   @Field({ description: 'Id of the user associated with the order' })
-  buyerID: string;
+  buyerId: string;
 
-  @Field(() => [RecordInput])
-  products: RecordInput[];
+  @Field(() => [OrderProductsInput])
+  products: OrderProductsInput[];
 
   @Field()
   status: string;
@@ -40,4 +44,7 @@ export class CreateOrderInput {
 
   @Field()
   totalPrice: string;
+
+  @Field()
+  paymentMethod: string;
 }

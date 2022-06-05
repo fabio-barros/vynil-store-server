@@ -10,7 +10,7 @@ import { Record } from './interfaces/record.interface';
 @Injectable()
 export class RecordsService {
   constructor(
-    @InjectModel('RecordType') private readonly recordModel: Model<RecordType>,
+    @InjectModel('Record') private readonly recordModel: Model<RecordType>,
   ) {}
   async create(createRecordDto: RecordInput): Promise<RecordType> {
     console.log(createRecordDto.releaseDate);

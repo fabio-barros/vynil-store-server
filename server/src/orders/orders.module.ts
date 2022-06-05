@@ -7,7 +7,7 @@ import { OrderType } from './entities/order.entity';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: 'OrderType', schema: OrderSchema }]),
+    MongooseModule.forFeature([{ name: 'Order', schema: OrderSchema }]),
     OrderType,
   ],
   providers: [OrdersService, OrdersResolver],

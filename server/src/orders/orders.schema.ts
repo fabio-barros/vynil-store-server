@@ -6,12 +6,21 @@ import { Record } from 'src/records/records.schema';
 export type OrderDocument = Order & Document;
 
 @Schema()
+export class OrderProducts {
+  @Prop({ type: String, required: true })
+  recordId: string;
+
+  @Prop({ type: Number, required: true })
+  qty: number;
+}
+
+@Schema()
 export class Order {
   @Prop({ type: String, required: true })
-  buyerID: string;
+  buyerId: string;
 
-  @Prop([{ type: Record, required: true, unique: true }])
-  products: Record[];
+  @Prop([{ type: OrderProducts, unique: true }])
+  products?: OrderProducts[];
 
   @Prop({
     type: String,
@@ -66,6 +75,12 @@ export class Order {
     required: true,
   })
   totalPrice: string;
+
+  @Prop({
+    type: String,
+    required: true,
+  })
+  paymentMethod: string;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

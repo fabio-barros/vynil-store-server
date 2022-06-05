@@ -1,16 +1,24 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 import { RecordType } from 'src/records/models/record.model';
-
+@ObjectType()
+export class OrderProducts {
+  // @Field()
+  // recordId: string;
+  @Field()
+  recordId: string;
+  @Field()
+  qty: number;
+}
 @ObjectType({ description: 'user' })
 export class OrderType {
   @Field(() => ID, { description: 'Order Id' })
   id: string;
 
   @Field(() => ID, { description: 'Id of the user associated with the order' })
-  buyerID: string;
+  buyerId: string;
 
-  @Field(() => [RecordType])
-  products: RecordType[];
+  @Field(() => [OrderProducts])
+  products: OrderProducts[];
 
   @Field()
   status: string;
@@ -38,4 +46,7 @@ export class OrderType {
 
   @Field()
   totalPrice: string;
+
+  @Field()
+  paymentMethod: string;
 }

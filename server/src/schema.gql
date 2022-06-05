@@ -6,15 +6,13 @@ input CreateOrderInput {
   address: String!
 
   """Id of the user associated with the order"""
-  buyerID: String!
+  buyerId: String!
   city: String!
   houseNumber: String!
-
-  """Order Id"""
-  id: ID!
   itemsPrice: String!
+  paymentMethod: String!
   postalCode: String!
-  products: [RecordInput!]!
+  products: [OrderProductsInput!]!
   shippingPrice: String!
   state: String!
   status: String!
@@ -59,20 +57,31 @@ type Mutation {
   updateRecord(id: String!, input: RecordInput!): RecordType!
 }
 
+type OrderProducts {
+  qty: Float!
+  recordId: String!
+}
+
+input OrderProductsInput {
+  qty: Float!
+  recordId: String!
+}
+
 """user"""
 type OrderType {
   address: String!
 
   """Id of the user associated with the order"""
-  buyerID: ID!
+  buyerId: ID!
   city: String!
   houseNumber: String!
 
   """Order Id"""
   id: ID!
   itemsPrice: String!
+  paymentMethod: String!
   postalCode: String!
-  products: [RecordType!]!
+  products: [OrderProducts!]!
   shippingPrice: String!
   state: String!
   status: String!
@@ -92,6 +101,9 @@ type Query {
   """Returns one order entity by Id."""
   order(id: String!): OrderType!
   orders: [OrderType!]!
+
+  """Returns all the orders made by an User."""
+  ordersByUserID(userId: String!): OrderType!
 
   """Returns one record entity by Id."""
   record(id: String!): RecordType!

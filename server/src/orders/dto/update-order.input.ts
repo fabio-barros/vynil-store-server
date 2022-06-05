@@ -2,17 +2,20 @@ import { CreateOrderInput } from './create-order.input';
 import { InputType, Field, Int, PartialType, ID } from '@nestjs/graphql';
 import { RecordType } from 'src/records/models/record.model';
 import { RecordInput } from 'src/records/dto/new-record-input.dto';
-
+@InputType()
+export class OrderProductsInput {
+  @Field()
+  recordId: string;
+  @Field()
+  qty: number;
+}
 @InputType()
 export class UpdateOrderInput extends PartialType(CreateOrderInput) {
-  @Field(() => ID)
-  id: string;
-
   @Field({ description: 'Id of the user associated with the order' })
-  buyerID: string;
+  buyerId: string;
 
-  @Field(() => [RecordType])
-  products?: RecordInput[];
+  @Field(() => [OrderProductsInput])
+  products: OrderProductsInput[];
 
   @Field()
   status: string;
@@ -40,4 +43,7 @@ export class UpdateOrderInput extends PartialType(CreateOrderInput) {
 
   @Field()
   totalPrice: string;
+
+  @Field()
+  paymentMethod: string;
 }

@@ -24,10 +24,21 @@ export class OrdersResolver {
     return this.orderService.findOne(id);
   }
 
+  @Query((returns) => OrderType, {
+    name: 'ordersByUserID',
+    description: 'Returns all the orders made by an User.',
+  })
+  async ordersByUserID(
+    @Args('userId', { type: () => String }) userId: string,
+  ): Promise<OrderType> {
+    return this.orderService.findOne(userId);
+  }
+
   @Mutation((returns) => OrderType)
   async createOrder(
     @Args('input') input: CreateOrderInput,
   ): Promise<OrderType> {
+    console.log('create order');
     return this.orderService.create(input);
   }
 
